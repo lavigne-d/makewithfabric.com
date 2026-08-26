@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fabric — a scriptable engineering notebook with CAD built in</title>
+<meta name="description" content="Describe a part in plain text and watch Fabric build it. Scriptable CAD that stores on disk, rebuilds exactly, and makes infinite variations from one file.">
+
+<!-- self-host these before shipping to Pages -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --green-void:#161E18;  --green:#1E2A21;  --green-lift:#26332A;
+  --paper:#E4DFC4;       --rule:#C8C09A;   --ink:#2A2A22;  --ink-soft:#5C5B49;
+  --terra:#C4652C;
+  --lav:#B9A7E0;         --lav-pale:#DCD2F5;  --lav-deep:#7A6BA8;
+
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --disp:"Fraunces",Georgia,serif;
+  --gut:clamp(1.25rem,4vw,3.5rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{margin:0;background:var(--green-void);color:var(--paper);
+     font:400 15px/1.7 var(--mono);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:var(--gut)}
+.band{padding-block:clamp(3.5rem,8vw,7rem);position:relative}
+.band--green{background:var(--green)}
+
+/* dot grid, from the app viewports */
+.band > .wrap{position:relative;z-index:1}
+.dots::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(var(--green-lift) 1.2px,transparent 1.2px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
+          mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
+
+/* type roles */
+.display{font-family:var(--disp);font-weight:300;
+  font-variation-settings:"opsz" 120,"SOFT" 40,"WONK" 1;
+  line-height:1.03;letter-spacing:-.01em;margin:0;color:var(--lav-pale)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--lav);font-weight:500;margin:0 0 1.1rem}
+.eyebrow--ink{color:var(--ink-soft)}
+h1.display{font-size:clamp(2.8rem,8vw,5.6rem)}
+h2.display{font-size:clamp(1.9rem,4.2vw,3rem)}
+em{font-style:italic;color:var(--lav);font-variation-settings:"opsz" 144,"SOFT" 60,"WONK" 1}
+
+/* the paper slab — always the functional surface. lavender never lands here. */
+.slab{background:var(--paper);color:var(--ink);border-radius:3px;
+  padding:clamp(1.5rem,3.5vw,2.5rem);
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 18px 40px -24px #000}
+.slab--ruled{background-image:repeating-linear-gradient(180deg,transparent 0 31px,var(--rule) 31px 32px);
+  background-position:0 10px}
+.slab p{color:var(--ink-soft);max-width:60ch}
+.tag{display:inline-block;background:#D6D0AE;color:var(--ink);font-size:12px;
+  letter-spacing:.06em;padding:.35rem .9rem;border-radius:4px 4px 0 0;position:relative;top:1px}
+
+.btn{display:inline-flex;align-items:center;padding:.72rem 1.3rem;border-radius:3px;
+  font:400 14px var(--mono);text-decoration:none;cursor:pointer;
+  border:1px solid var(--lav-deep);color:var(--lav-pale);background:none;
+  transition:background .2s,color .2s,border-color .2s}
+.btn:hover{background:var(--lav);color:var(--green-void);border-color:var(--lav)}
+.btn--solid{background:var(--lav);color:var(--green-void);border-color:var(--lav)}
+:focus-visible{outline:2px solid var(--lav);outline-offset:3px}
+
+header{position:sticky;top:0;z-index:20;background:rgba(22,30,24,.86);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--green-lift)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.brand svg{width:26px;height:26px}
+.brand span{font-family:var(--disp);font-variation-settings:"opsz" 40,"SOFT" 30,"WONK" 1;
+  font-size:23px;color:var(--lav-pale)}
+
+.lede{max-width:56ch;color:#CFCBB2;margin:1.6rem 0 2rem}
+/* proof row: three affirmatives, dot-separated */
+.proof{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:.35rem clamp(1.75rem,5vw,3.25rem);margin:0;text-align:center;
+  font-size:13px;letter-spacing:.1em;color:#7E8A7F}
+.proof span{position:relative}
+.proof span + span::before{content:"·";position:absolute;
+  left:calc(-1 * clamp(1.75rem,5vw,3.25rem) / 2);transform:translateX(-50%);
+  color:#8A968B}
+@media (max-width:560px){
+  .proof{flex-direction:column;gap:.4rem}
+  .proof span + span::before{display:none}
+}
+
+/* waitlist form */
+.waitlist{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;max-width:30rem;margin-top:.5rem}
+.waitlist input[type=email]{
+  flex:1 1 15rem;min-width:0;font:400 14px var(--mono);
+  padding:.72rem .95rem;border-radius:3px;
+  background:rgba(228,223,196,.06);color:var(--paper);
+  border:1px solid var(--green-lift);transition:border-color .2s}
+.waitlist input[type=email]::placeholder{color:#6F7A70}
+.waitlist input[type=email]:focus{border-color:var(--lav-deep);outline:none}
+.waitlist input[type=email]:focus-visible{outline:2px solid var(--lav);outline-offset:2px}
+.waitlist .btn{border:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.formnote{font-size:12px;color:#7E8A7F;margin:.9rem 0 0;min-height:1.2em}
+.formnote[data-state="ok"]{color:var(--lav)}
+.formnote[data-state="err"]{color:var(--terra)}
+.waitlist[hidden]{display:none}
+
+footer{border-top:1px solid var(--green-lift);padding-block:2.25rem;
+  font-size:12.5px;color:#7E8A7F}
+footer a{color:inherit;text-decoration:none}
+footer a:hover{color:var(--lav)}
+
+/* placeholder marker — delete the class as you fill each one in */
+.todo{border-bottom:1px dashed var(--terra)}
+
+/* ------------------------------------------------------------------
+   DEMO SLAB
+   .demo__stage is a fixed frame with a swappable occupant. Today it
+   holds a <video>; later it holds the live interactive session. Swap
+   the child element — the frame, chrome and copy do not move.
+   ------------------------------------------------------------------ */
+.demo{margin:0}
+.demo__stage{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:2px;
+  background:var(--green-void);
+  box-shadow:0 0 0 1px rgba(42,42,34,.28),0 1px 3px rgba(42,42,34,.22) inset}
+.demo__stage > video,
+.demo__stage > iframe,
+.demo__stage > canvas{position:absolute;inset:0;width:100%;height:100%;
+  border:0;display:block;object-fit:cover}
+
+/* empty stage: dot grid only, until an asset is wired up */
+.demo__stage[data-demo-state="placeholder"]{
+  background-image:radial-gradient(var(--green-lift) 1.2px,transparent 1.2px);
+  background-size:26px 26px}
+
+/* pause control — autoplay over 5s needs a stop (WCAG 2.2.2) */
+.demo__toggle{position:absolute;z-index:2;right:.75rem;bottom:.75rem;
+  width:36px;height:36px;display:grid;place-items:center;cursor:pointer;
+  border-radius:3px;border:1px solid rgba(228,223,196,.28);
+  background:rgba(22,30,24,.72);backdrop-filter:blur(6px);
+  transition:background .2s,border-color .2s}
+.demo__toggle:hover{background:rgba(22,30,24,.92);border-color:var(--lav)}
+.demo__toggle svg{width:14px;height:14px;fill:var(--paper);pointer-events:none}
+.demo__toggle .i-play{display:none;margin-left:2px}
+.demo__toggle[data-playing="false"] .i-play{display:block}
+.demo__toggle[data-playing="false"] .i-pause{display:none}
+.demo__stage[data-demo-state="placeholder"] .demo__toggle{display:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top">
+      <!-- placeholder mark until the lavender logo lands -->
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <ellipse cx="20" cy="20" rx="18" ry="10" fill="none" stroke="#B9A7E0" stroke-width="1.4"/>
+        <ellipse cx="20" cy="20" rx="7" ry="3.8" fill="none" stroke="#DCD2F5" stroke-width="1.4"/>
+      </svg>
+      <span style="letter-spacing: 0.146em;">Fabric</span>
+    </a>
+    <a class="btn" href="#waitlist">Join the waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="band dots">
+    <div class="wrap">
+      <p class="eyebrow">Make with Fabric</p>
+      <h1 class="display">Watch a part <em>come to life</em>.</h1>
+      <p class="lede">
+        Describe it in plain text. Fabric builds it, instantly and exactly, every time.
+      </p>
+      <form class="waitlist" id="waitlist" novalidate>
+        <label class="hp" for="company">Company (leave blank)</label>
+        <input class="hp" type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+        <input type="email" name="email" id="email" required autocomplete="email"
+               placeholder="you@domain.com" aria-label="Email address">
+        <button class="btn btn--solid" type="submit" id="wlBtn">Join the waitlist</button>
+      </form>
+      <p class="formnote" id="wlNote" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+
+  <!-- DEMO SLAB -->
+  <section class="band band--green">
+    <div class="wrap">
+      <span class="tag">demo.JSON</span>
+      <figure class="slab demo">
+        <!-- swap point: replace the child of .demo__stage with the live
+             session when it's ready, and set data-demo-state="live" -->
+        <div class="demo__stage" data-demo-state="placeholder" id="demoStage">
+          <!-- when the clip exists, set data-demo-state="ready"
+               and uncomment:
+          <video id="demoVideo" muted loop playsinline preload="none"
+                 poster="POSTER_URL" src="VIDEO_URL"
+                 aria-label="Fabric rebuilding a model after a parameter change"></video>
+          <button class="demo__toggle" id="demoToggle" type="button"
+                  data-playing="true" aria-label="Pause the demo">
+            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l14 8-14 8z"/></svg>
+          </button>
+          -->
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- PROOF ROW -->
+  <section class="band dots">
+    <div class="wrap">
+      <p class="proof">
+        <span>scriptable language</span>
+        <span>on-disk storage</span>
+        <span>infinite variations</span>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+    <span>Fabric</span>
+    <span><a href="#">GitHub</a> · <a href="#">Docs</a></span>
+  </div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------------
+   Demo playback. Nothing downloads until the stage scrolls into view
+   (preload="none" + IntersectionObserver), and playback pauses when it
+   leaves. No-ops safely while the stage is still a placeholder.
+   ------------------------------------------------------------------ */
+(function(){
+  const video  = document.getElementById('demoVideo');
+  const toggle = document.getElementById('demoToggle');
+  if (!video) return;                                    // placeholder state
+
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let paused  = still;                                   // reader-intent, not observer-intent
+  if (still && toggle) {
+    toggle.dataset.playing = 'false';
+    toggle.setAttribute('aria-label', 'Play the demo');
+  }
+
+  const play = () => video.play().catch(() => {});       // autoplay can still be refused
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !paused) play();
+        else video.pause();
+      });
+    }, { threshold: 0.25 }).observe(video);
+  } else if (!paused) {
+    play();
+  }
+
+  if (toggle) toggle.addEventListener('click', () => {
+    paused = !video.paused;
+    if (paused) video.pause(); else play();
+    toggle.dataset.playing = paused ? 'false' : 'true';
+    toggle.setAttribute('aria-label', paused ? 'Play the demo' : 'Pause the demo');
+  });
+})();
+
+/* ------------------------------------------------------------------
+   Waitlist. Paste your provider's form endpoint below and it works.
+   Public by design — this URL is visible in the page source, which is
+   fine: it only accepts submissions, it can't read the list.
+   ------------------------------------------------------------------ */
+const ENDPOINT = ""; // e.g. https://eocampaign1.com/form/xxxx  |  https://buttondown.com/api/emails/embed-subscribe/fabric
+
+const form = document.getElementById('waitlist');
+const note = document.getElementById('wlNote');
+const btn  = document.getElementById('wlBtn');
+
+function say(msg, state){ note.textContent = msg; note.dataset.state = state || ''; }
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = form.email.value.trim();
+
+  if (form.company.value) return;                      // honeypot: bot filled it
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return say('That address looks incomplete.', 'err');
+  if (!ENDPOINT) return say('Form endpoint not wired up yet.', 'err');
+
+  btn.disabled = true; say('Sending…');
+  try {
+    const body = new FormData();
+    body.append('email', email);
+    const res = await fetch(ENDPOINT, { method:'POST', body, headers:{ Accept:'application/json' } });
+    if (!res.ok) throw new Error(res.status);
+    form.hidden = true;
+    say('You are on the list. Check your inbox to confirm.', 'ok');
+  } catch {
+    btn.disabled = false;
+    say('Something went wrong. Try again in a moment.', 'err');
+  }
+});
+</script>
+</body>
+</html>
