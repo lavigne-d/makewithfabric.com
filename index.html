@@ -15,7 +15,7 @@
   --teal-void:#091F1F;  --teal:#102B2B;  --teal-lift:#1B3A3A;
   --paper:#E4DFC4;       --rule:#C8C09A;   --ink:#2A2A22;  --ink-soft:#5C5B49;
   --terra:#C4652C;
-  --lav:#B9A7E0;         --lav-pale:#DCD2F5;  --lav-deep:#7A6BA8;
+  --lilac:#CFB3EB;         --lilac-pale:#E7D6F5;  --lilac-deep:#8A70A9;
 
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --disp:"Fraunces",Georgia,serif;
@@ -41,15 +41,15 @@ body{margin:0;background:var(--teal-void);color:var(--paper);
 /* type roles */
 .display{font-family:var(--disp);font-weight:300;
   font-variation-settings:"opsz" 120,"SOFT" 40,"WONK" 1;
-  line-height:1.03;letter-spacing:-.01em;margin:0;color:var(--lav-pale)}
+  line-height:1.03;letter-spacing:-.01em;margin:0;color:var(--lilac-pale)}
 .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--lav);font-weight:500;margin:0 0 1.1rem}
+  color:var(--lilac);font-weight:500;margin:0 0 1.1rem}
 .eyebrow--ink{color:var(--ink-soft)}
 h1.display{font-size:clamp(2.8rem,8vw,5.6rem)}
 h2.display{font-size:clamp(1.9rem,4.2vw,3rem)}
-em{font-style:italic;color:var(--lav);font-variation-settings:"opsz" 144,"SOFT" 60,"WONK" 1}
+em{font-style:italic;color:var(--lilac);font-variation-settings:"opsz" 144,"SOFT" 60,"WONK" 1}
 
-/* the paper slab — always the functional surface. lavender never lands here. */
+/* the paper slab — always the functional surface. the accent never lands here. */
 .slab{background:var(--paper);color:var(--ink);border-radius:3px;
   padding:clamp(1.5rem,3.5vw,2.5rem);
   box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 18px 40px -24px #000}
@@ -61,11 +61,11 @@ em{font-style:italic;color:var(--lav);font-variation-settings:"opsz" 144,"SOFT" 
 
 .btn{display:inline-flex;align-items:center;padding:.72rem 1.3rem;border-radius:3px;
   font:400 14px var(--mono);text-decoration:none;cursor:pointer;
-  border:1px solid var(--lav-deep);color:var(--lav-pale);background:none;
+  border:1px solid var(--lilac-deep);color:var(--lilac-pale);background:none;
   transition:background .2s,color .2s,border-color .2s}
-.btn:hover{background:var(--lav);color:var(--teal-void);border-color:var(--lav)}
-.btn--solid{background:var(--lav);color:var(--teal-void);border-color:var(--lav)}
-:focus-visible{outline:2px solid var(--lav);outline-offset:3px}
+.btn:hover{background:var(--lilac);color:var(--teal-void);border-color:var(--lilac)}
+.btn--solid{background:var(--lilac);color:var(--teal-void);border-color:var(--lilac)}
+:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
 
 header{position:sticky;top:0;z-index:20;background:rgba(9,31,31,.86);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--teal-lift)}
@@ -73,7 +73,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(9,31,31,.86);
 .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
 .brand svg{width:26px;height:26px}
 .brand span{font-family:var(--disp);font-variation-settings:"opsz" 40,"SOFT" 30,"WONK" 1;
-  font-size:23px;color:var(--lav-pale)}
+  font-size:23px;color:var(--lilac-pale)}
 
 .lede{max-width:56ch;color:#CFCBB2;margin:1.6rem 0 2rem}
 /* proof row: three affirmatives, dot-separated */
@@ -97,19 +97,19 @@ header{position:sticky;top:0;z-index:20;background:rgba(9,31,31,.86);
   background:rgba(228,223,196,.06);color:var(--paper);
   border:1px solid var(--teal-lift);transition:border-color .2s}
 .waitlist input[type=email]::placeholder{color:#6E7C7C}
-.waitlist input[type=email]:focus{border-color:var(--lav-deep);outline:none}
-.waitlist input[type=email]:focus-visible{outline:2px solid var(--lav);outline-offset:2px}
+.waitlist input[type=email]:focus{border-color:var(--lilac-deep);outline:none}
+.waitlist input[type=email]:focus-visible{outline:2px solid var(--lilac);outline-offset:2px}
 .waitlist .btn{border:none}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .formnote{font-size:12px;color:#7E8C8C;margin:.9rem 0 0;min-height:1.2em}
-.formnote[data-state="ok"]{color:var(--lav)}
+.formnote[data-state="ok"]{color:var(--lilac)}
 .formnote[data-state="err"]{color:var(--terra)}
 .waitlist[hidden]{display:none}
 
 footer{border-top:1px solid var(--teal-lift);padding-block:2.25rem;
   font-size:12.5px;color:#7E8C8C}
 footer a{color:inherit;text-decoration:none}
-footer a:hover{color:var(--lav)}
+footer a:hover{color:var(--lilac)}
 
 /* placeholder marker — delete the class as you fill each one in */
 .todo{border-bottom:1px dashed var(--terra)}
@@ -150,10 +150,10 @@ footer a:hover{color:var(--lav)}
 .demo__tasks li{display:flex;gap:.6rem;align-items:baseline;color:#5E6D6D}
 .demo__tasks li::before{content:"•";flex:none;width:1ch;color:#4C5C5C}
 .demo__tasks li[data-state="done"]{color:#6E7C7C}
-.demo__tasks li[data-state="done"]::before{content:"✓";color:var(--lav-deep)}
+.demo__tasks li[data-state="done"]::before{content:"✓";color:var(--lilac-deep)}
 .demo__tasks li[data-state="now"]{color:var(--paper)}
-.demo__tasks li[data-state="now"]::before{content:"›";color:var(--lav)}
-.demo__tasks code{font:inherit;color:var(--lav-pale);background:rgba(185,167,224,.1);
+.demo__tasks li[data-state="now"]::before{content:"›";color:var(--lilac)}
+.demo__tasks code{font:inherit;color:var(--lilac-pale);background:rgba(207,179,235,.12);
   border-radius:2px;padding:.05rem .4rem;margin-left:.15rem}
 .demo__tasks li[data-state="todo"] code{visibility:hidden}
 
@@ -162,16 +162,16 @@ footer a:hover{color:var(--lav)}
 .demo__out p{margin:0;color:#8B9B9B;white-space:pre-wrap;word-break:break-word}
 .demo__out p[data-kind="cmd"]{color:var(--paper)}
 .demo__out p[data-kind="err"]{color:var(--terra)}
-.demo__out p[data-kind="done"]{color:var(--lav)}
+.demo__out p[data-kind="done"]{color:var(--lilac)}
 .demo__out:empty{display:none}
 
 /* prompt line */
 .demo__line{display:flex;align-items:center;gap:.55rem;margin-top:.55rem}
-.demo__line::before{content:">";color:var(--lav);flex:none}
+.demo__line::before{content:">";color:var(--lilac);flex:none}
 .demo__input{flex:1 1 auto;min-width:0;background:none;border:0;padding:.15rem 0;
-  font:inherit;font-family:var(--mono);color:var(--paper);caret-color:var(--lav)}
+  font:inherit;font-family:var(--mono);color:var(--paper);caret-color:var(--lilac)}
 .demo__input:focus{outline:none}
-.demo__line:focus-within{outline:2px solid var(--lav);outline-offset:4px;border-radius:2px}
+.demo__line:focus-within{outline:2px solid var(--lilac);outline-offset:4px;border-radius:2px}
 .demo__input::placeholder{color:#4C5C5C}
 
 /* finish state */
@@ -181,7 +181,7 @@ footer a:hover{color:var(--lav)}
 .demo__reset{background:none;border:0;padding:0;cursor:pointer;font:inherit;
   font-family:var(--mono);font-size:12.5px;color:#7E8C8C;text-decoration:underline;
   text-underline-offset:3px}
-.demo__reset:hover{color:var(--lav)}
+.demo__reset:hover{color:var(--lilac)}
 </style>
 </head>
 <body>
@@ -189,10 +189,10 @@ footer a:hover{color:var(--lav)}
 <header>
   <div class="wrap bar">
     <a class="brand" href="#top">
-      <!-- placeholder mark until the lavender logo lands -->
+      <!-- placeholder mark until the real logo lands -->
       <svg viewBox="0 0 40 40" aria-hidden="true">
-        <ellipse cx="20" cy="20" rx="18" ry="10" fill="none" stroke="#B9A7E0" stroke-width="1.4"/>
-        <ellipse cx="20" cy="20" rx="7" ry="3.8" fill="none" stroke="#DCD2F5" stroke-width="1.4"/>
+        <ellipse cx="20" cy="20" rx="18" ry="10" fill="none" stroke="#CFB3EB" stroke-width="1.4"/>
+        <ellipse cx="20" cy="20" rx="7" ry="3.8" fill="none" stroke="#E7D6F5" stroke-width="1.4"/>
       </svg>
       <span style="letter-spacing: 0.146em;">Fabric</span>
     </a>
