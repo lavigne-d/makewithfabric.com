@@ -12,7 +12,7 @@
 
 <style>
 :root{
-  --blue-void:#07181C;  --blue:#0E262C;  --blue-lift:#183640;
+  --teal-void:#091F1F;  --teal:#102B2B;  --teal-lift:#1B3A3A;
   --paper:#E4DFC4;       --rule:#C8C09A;   --ink:#2A2A22;  --ink-soft:#5C5B49;
   --terra:#C4652C;
   --lav:#B9A7E0;         --lav-pale:#DCD2F5;  --lav-deep:#7A6BA8;
@@ -24,16 +24,16 @@
 *,*::before,*::after{box-sizing:border-box}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-body{margin:0;background:var(--blue-void);color:var(--paper);
+body{margin:0;background:var(--teal-void);color:var(--paper);
      font:400 15px/1.7 var(--mono);-webkit-font-smoothing:antialiased}
 .wrap{max-width:1080px;margin:0 auto;padding-inline:var(--gut)}
 .band{padding-block:clamp(3.5rem,8vw,7rem);position:relative}
-.band--blue{background:var(--blue)}
+.band--teal{background:var(--teal)}
 
 /* dot grid, from the app viewports */
 .band > .wrap{position:relative;z-index:1}
 .dots::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(var(--blue-lift) 1.2px,transparent 1.2px);
+  background-image:radial-gradient(var(--teal-lift) 1.2px,transparent 1.2px);
   background-size:26px 26px;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
           mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
@@ -63,12 +63,12 @@ em{font-style:italic;color:var(--lav);font-variation-settings:"opsz" 144,"SOFT" 
   font:400 14px var(--mono);text-decoration:none;cursor:pointer;
   border:1px solid var(--lav-deep);color:var(--lav-pale);background:none;
   transition:background .2s,color .2s,border-color .2s}
-.btn:hover{background:var(--lav);color:var(--blue-void);border-color:var(--lav)}
-.btn--solid{background:var(--lav);color:var(--blue-void);border-color:var(--lav)}
+.btn:hover{background:var(--lav);color:var(--teal-void);border-color:var(--lav)}
+.btn--solid{background:var(--lav);color:var(--teal-void);border-color:var(--lav)}
 :focus-visible{outline:2px solid var(--lav);outline-offset:3px}
 
-header{position:sticky;top:0;z-index:20;background:rgba(7,24,28,.86);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--blue-lift)}
+header{position:sticky;top:0;z-index:20;background:rgba(9,31,31,.86);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--teal-lift)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:62px}
 .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
 .brand svg{width:26px;height:26px}
@@ -79,11 +79,11 @@ header{position:sticky;top:0;z-index:20;background:rgba(7,24,28,.86);
 /* proof row: three affirmatives, dot-separated */
 .proof{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
   gap:.35rem clamp(1.75rem,5vw,3.25rem);margin:0;text-align:center;
-  font-size:13px;letter-spacing:.1em;color:#7C8B90}
+  font-size:13px;letter-spacing:.1em;color:#7E8C8C}
 .proof span{position:relative}
 .proof span + span::before{content:"·";position:absolute;
   left:calc(-1 * clamp(1.75rem,5vw,3.25rem) / 2);transform:translateX(-50%);
-  color:#87979D}
+  color:#889898}
 @media (max-width:560px){
   .proof{flex-direction:column;gap:.4rem}
   .proof span + span::before{display:none}
@@ -95,19 +95,19 @@ header{position:sticky;top:0;z-index:20;background:rgba(7,24,28,.86);
   flex:1 1 15rem;min-width:0;font:400 14px var(--mono);
   padding:.72rem .95rem;border-radius:3px;
   background:rgba(228,223,196,.06);color:var(--paper);
-  border:1px solid var(--blue-lift);transition:border-color .2s}
-.waitlist input[type=email]::placeholder{color:#6D7B81}
+  border:1px solid var(--teal-lift);transition:border-color .2s}
+.waitlist input[type=email]::placeholder{color:#6E7C7C}
 .waitlist input[type=email]:focus{border-color:var(--lav-deep);outline:none}
 .waitlist input[type=email]:focus-visible{outline:2px solid var(--lav);outline-offset:2px}
 .waitlist .btn{border:none}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.formnote{font-size:12px;color:#7C8B90;margin:.9rem 0 0;min-height:1.2em}
+.formnote{font-size:12px;color:#7E8C8C;margin:.9rem 0 0;min-height:1.2em}
 .formnote[data-state="ok"]{color:var(--lav)}
 .formnote[data-state="err"]{color:var(--terra)}
 .waitlist[hidden]{display:none}
 
-footer{border-top:1px solid var(--blue-lift);padding-block:2.25rem;
-  font-size:12.5px;color:#7C8B90}
+footer{border-top:1px solid var(--teal-lift);padding-block:2.25rem;
+  font-size:12.5px;color:#7E8C8C}
 footer a{color:inherit;text-decoration:none}
 footer a:hover{color:var(--lav)}
 
@@ -122,7 +122,7 @@ footer a:hover{color:var(--lav)}
    ------------------------------------------------------------------ */
 .demo{margin:0}
 .demo__stage{position:relative;aspect-ratio:16/9;overflow:hidden;
-  border-radius:2px 2px 0 0;background:var(--blue-void)}
+  border-radius:2px 2px 0 0;background:var(--teal-void)}
 .demo__stage > video,
 .demo__stage > iframe,
 .demo__stage > canvas{position:absolute;inset:0;width:100%;height:100%;
@@ -130,7 +130,7 @@ footer a:hover{color:var(--lav)}
 
 /* empty stage: dot grid only, until an asset is wired up */
 .demo__stage[data-demo-state="placeholder"]{
-  background-image:radial-gradient(var(--blue-lift) 1.2px,transparent 1.2px);
+  background-image:radial-gradient(var(--teal-lift) 1.2px,transparent 1.2px);
   background-size:26px 26px}
 
 /* the crossfading frame */
@@ -140,16 +140,16 @@ footer a:hover{color:var(--lav)}
 /* ------------------------------------------------------------------
    CONSOLE — flush under the stage so the two read as one screen.
    ------------------------------------------------------------------ */
-.demo__console{background:var(--blue-void);border-radius:0 0 2px 2px;
+.demo__console{background:var(--teal-void);border-radius:0 0 2px 2px;
   padding:clamp(.9rem,2.2vw,1.25rem);font-size:13px;line-height:1.65;
   box-shadow:0 0 0 1px rgba(42,42,34,.28)}
 
 /* task list */
 .demo__tasks{list-style:none;margin:0 0 .9rem;padding:0 0 .9rem;
-  border-bottom:1px solid var(--blue-lift);display:grid;gap:.3rem}
-.demo__tasks li{display:flex;gap:.6rem;align-items:baseline;color:#5D6C72}
-.demo__tasks li::before{content:"•";flex:none;width:1ch;color:#4B5B62}
-.demo__tasks li[data-state="done"]{color:#6D7B81}
+  border-bottom:1px solid var(--teal-lift);display:grid;gap:.3rem}
+.demo__tasks li{display:flex;gap:.6rem;align-items:baseline;color:#5E6D6D}
+.demo__tasks li::before{content:"•";flex:none;width:1ch;color:#4C5C5C}
+.demo__tasks li[data-state="done"]{color:#6E7C7C}
 .demo__tasks li[data-state="done"]::before{content:"✓";color:var(--lav-deep)}
 .demo__tasks li[data-state="now"]{color:var(--paper)}
 .demo__tasks li[data-state="now"]::before{content:"›";color:var(--lav)}
@@ -159,7 +159,7 @@ footer a:hover{color:var(--lav)}
 
 /* output history */
 .demo__out{margin:0;max-height:9.5rem;overflow-y:auto;overscroll-behavior:contain}
-.demo__out p{margin:0;color:#8B9AA0;white-space:pre-wrap;word-break:break-word}
+.demo__out p{margin:0;color:#8B9B9B;white-space:pre-wrap;word-break:break-word}
 .demo__out p[data-kind="cmd"]{color:var(--paper)}
 .demo__out p[data-kind="err"]{color:var(--terra)}
 .demo__out p[data-kind="done"]{color:var(--lav)}
@@ -172,14 +172,14 @@ footer a:hover{color:var(--lav)}
   font:inherit;font-family:var(--mono);color:var(--paper);caret-color:var(--lav)}
 .demo__input:focus{outline:none}
 .demo__line:focus-within{outline:2px solid var(--lav);outline-offset:4px;border-radius:2px}
-.demo__input::placeholder{color:#4B5B62}
+.demo__input::placeholder{color:#4C5C5C}
 
 /* finish state */
 .demo__end{display:none;margin-top:.9rem;gap:.7rem;flex-wrap:wrap;align-items:center}
 .demo__console[data-done="true"] .demo__end{display:flex}
 .demo__console[data-done="true"] .demo__line{display:none}
 .demo__reset{background:none;border:0;padding:0;cursor:pointer;font:inherit;
-  font-family:var(--mono);font-size:12.5px;color:#7C8B90;text-decoration:underline;
+  font-family:var(--mono);font-size:12.5px;color:#7E8C8C;text-decoration:underline;
   text-underline-offset:3px}
 .demo__reset:hover{color:var(--lav)}
 </style>
@@ -223,7 +223,7 @@ footer a:hover{color:var(--lav)}
 
 
   <!-- DEMO SLAB -->
-  <section class="band band--blue">
+  <section class="band band--teal">
     <div class="wrap">
       <span class="tag">demo.JSON</span>
       <figure class="slab demo">
