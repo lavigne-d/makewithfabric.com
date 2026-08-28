@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fabric — a scriptable engineering notebook with CAD built in</title>
-<meta name="description" content="Describe systems in plain text and watch Fabric build them. Scriptable CAD that stores on disk, rebuilds exactly, and makes infinite variations from one file.">
+<meta name="description" content="Describe parts in plain text and watch Fabric build them. Scriptable CAD that stores on disk, rebuilds exactly, and makes infinite variations from one file.">
 
 <!-- self-host these before shipping to Pages -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
 
 <style>
 :root{
-  --green-void:#161E18;  --green:#1E2A21;  --green-lift:#26332A;
+  --blue-void:#07181C;  --blue:#0E262C;  --blue-lift:#183640;
   --paper:#E4DFC4;       --rule:#C8C09A;   --ink:#2A2A22;  --ink-soft:#5C5B49;
   --terra:#C4652C;
   --lav:#B9A7E0;         --lav-pale:#DCD2F5;  --lav-deep:#7A6BA8;
@@ -24,16 +24,16 @@
 *,*::before,*::after{box-sizing:border-box}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-body{margin:0;background:var(--green-void);color:var(--paper);
+body{margin:0;background:var(--blue-void);color:var(--paper);
      font:400 15px/1.7 var(--mono);-webkit-font-smoothing:antialiased}
 .wrap{max-width:1080px;margin:0 auto;padding-inline:var(--gut)}
 .band{padding-block:clamp(3.5rem,8vw,7rem);position:relative}
-.band--green{background:var(--green)}
+.band--blue{background:var(--blue)}
 
 /* dot grid, from the app viewports */
 .band > .wrap{position:relative;z-index:1}
 .dots::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(var(--green-lift) 1.2px,transparent 1.2px);
+  background-image:radial-gradient(var(--blue-lift) 1.2px,transparent 1.2px);
   background-size:26px 26px;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
           mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
@@ -63,12 +63,12 @@ em{font-style:italic;color:var(--lav);font-variation-settings:"opsz" 144,"SOFT" 
   font:400 14px var(--mono);text-decoration:none;cursor:pointer;
   border:1px solid var(--lav-deep);color:var(--lav-pale);background:none;
   transition:background .2s,color .2s,border-color .2s}
-.btn:hover{background:var(--lav);color:var(--green-void);border-color:var(--lav)}
-.btn--solid{background:var(--lav);color:var(--green-void);border-color:var(--lav)}
+.btn:hover{background:var(--lav);color:var(--blue-void);border-color:var(--lav)}
+.btn--solid{background:var(--lav);color:var(--blue-void);border-color:var(--lav)}
 :focus-visible{outline:2px solid var(--lav);outline-offset:3px}
 
-header{position:sticky;top:0;z-index:20;background:rgba(22,30,24,.86);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--green-lift)}
+header{position:sticky;top:0;z-index:20;background:rgba(7,24,28,.86);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--blue-lift)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:62px}
 .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
 .brand svg{width:26px;height:26px}
@@ -79,11 +79,11 @@ header{position:sticky;top:0;z-index:20;background:rgba(22,30,24,.86);
 /* proof row: three affirmatives, dot-separated */
 .proof{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
   gap:.35rem clamp(1.75rem,5vw,3.25rem);margin:0;text-align:center;
-  font-size:13px;letter-spacing:.1em;color:#7E8A7F}
+  font-size:13px;letter-spacing:.1em;color:#7C8B90}
 .proof span{position:relative}
 .proof span + span::before{content:"·";position:absolute;
   left:calc(-1 * clamp(1.75rem,5vw,3.25rem) / 2);transform:translateX(-50%);
-  color:#8A968B}
+  color:#87979D}
 @media (max-width:560px){
   .proof{flex-direction:column;gap:.4rem}
   .proof span + span::before{display:none}
@@ -95,19 +95,19 @@ header{position:sticky;top:0;z-index:20;background:rgba(22,30,24,.86);
   flex:1 1 15rem;min-width:0;font:400 14px var(--mono);
   padding:.72rem .95rem;border-radius:3px;
   background:rgba(228,223,196,.06);color:var(--paper);
-  border:1px solid var(--green-lift);transition:border-color .2s}
-.waitlist input[type=email]::placeholder{color:#6F7A70}
+  border:1px solid var(--blue-lift);transition:border-color .2s}
+.waitlist input[type=email]::placeholder{color:#6D7B81}
 .waitlist input[type=email]:focus{border-color:var(--lav-deep);outline:none}
 .waitlist input[type=email]:focus-visible{outline:2px solid var(--lav);outline-offset:2px}
 .waitlist .btn{border:none}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.formnote{font-size:12px;color:#7E8A7F;margin:.9rem 0 0;min-height:1.2em}
+.formnote{font-size:12px;color:#7C8B90;margin:.9rem 0 0;min-height:1.2em}
 .formnote[data-state="ok"]{color:var(--lav)}
 .formnote[data-state="err"]{color:var(--terra)}
 .waitlist[hidden]{display:none}
 
-footer{border-top:1px solid var(--green-lift);padding-block:2.25rem;
-  font-size:12.5px;color:#7E8A7F}
+footer{border-top:1px solid var(--blue-lift);padding-block:2.25rem;
+  font-size:12.5px;color:#7C8B90}
 footer a{color:inherit;text-decoration:none}
 footer a:hover{color:var(--lav)}
 
@@ -121,9 +121,8 @@ footer a:hover{color:var(--lav)}
    the child element — the frame, chrome and copy do not move.
    ------------------------------------------------------------------ */
 .demo{margin:0}
-.demo__stage{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:2px;
-  background:var(--green-void);
-  box-shadow:0 0 0 1px rgba(42,42,34,.28),0 1px 3px rgba(42,42,34,.22) inset}
+.demo__stage{position:relative;aspect-ratio:16/9;overflow:hidden;
+  border-radius:2px 2px 0 0;background:var(--blue-void)}
 .demo__stage > video,
 .demo__stage > iframe,
 .demo__stage > canvas{position:absolute;inset:0;width:100%;height:100%;
@@ -131,21 +130,58 @@ footer a:hover{color:var(--lav)}
 
 /* empty stage: dot grid only, until an asset is wired up */
 .demo__stage[data-demo-state="placeholder"]{
-  background-image:radial-gradient(var(--green-lift) 1.2px,transparent 1.2px);
+  background-image:radial-gradient(var(--blue-lift) 1.2px,transparent 1.2px);
   background-size:26px 26px}
 
-/* pause control — autoplay over 5s needs a stop (WCAG 2.2.2) */
-.demo__toggle{position:absolute;z-index:2;right:.75rem;bottom:.75rem;
-  width:36px;height:36px;display:grid;place-items:center;cursor:pointer;
-  border-radius:3px;border:1px solid rgba(228,223,196,.28);
-  background:rgba(22,30,24,.72);backdrop-filter:blur(6px);
-  transition:background .2s,border-color .2s}
-.demo__toggle:hover{background:rgba(22,30,24,.92);border-color:var(--lav)}
-.demo__toggle svg{width:14px;height:14px;fill:var(--paper);pointer-events:none}
-.demo__toggle .i-play{display:none;margin-left:2px}
-.demo__toggle[data-playing="false"] .i-play{display:block}
-.demo__toggle[data-playing="false"] .i-pause{display:none}
-.demo__stage[data-demo-state="placeholder"] .demo__toggle{display:none}
+/* the crossfading frame */
+.demo__frame{opacity:0;transition:opacity .35s ease}
+.demo__frame[data-shown="true"]{opacity:1}
+
+/* ------------------------------------------------------------------
+   CONSOLE — flush under the stage so the two read as one screen.
+   ------------------------------------------------------------------ */
+.demo__console{background:var(--blue-void);border-radius:0 0 2px 2px;
+  padding:clamp(.9rem,2.2vw,1.25rem);font-size:13px;line-height:1.65;
+  box-shadow:0 0 0 1px rgba(42,42,34,.28)}
+
+/* task list */
+.demo__tasks{list-style:none;margin:0 0 .9rem;padding:0 0 .9rem;
+  border-bottom:1px solid var(--blue-lift);display:grid;gap:.3rem}
+.demo__tasks li{display:flex;gap:.6rem;align-items:baseline;color:#5D6C72}
+.demo__tasks li::before{content:"•";flex:none;width:1ch;color:#4B5B62}
+.demo__tasks li[data-state="done"]{color:#6D7B81}
+.demo__tasks li[data-state="done"]::before{content:"✓";color:var(--lav-deep)}
+.demo__tasks li[data-state="now"]{color:var(--paper)}
+.demo__tasks li[data-state="now"]::before{content:"›";color:var(--lav)}
+.demo__tasks code{font:inherit;color:var(--lav-pale);background:rgba(185,167,224,.1);
+  border-radius:2px;padding:.05rem .4rem;margin-left:.15rem}
+.demo__tasks li[data-state="todo"] code{visibility:hidden}
+
+/* output history */
+.demo__out{margin:0;max-height:9.5rem;overflow-y:auto;overscroll-behavior:contain}
+.demo__out p{margin:0;color:#8B9AA0;white-space:pre-wrap;word-break:break-word}
+.demo__out p[data-kind="cmd"]{color:var(--paper)}
+.demo__out p[data-kind="err"]{color:var(--terra)}
+.demo__out p[data-kind="done"]{color:var(--lav)}
+.demo__out:empty{display:none}
+
+/* prompt line */
+.demo__line{display:flex;align-items:center;gap:.55rem;margin-top:.55rem}
+.demo__line::before{content:">";color:var(--lav);flex:none}
+.demo__input{flex:1 1 auto;min-width:0;background:none;border:0;padding:.15rem 0;
+  font:inherit;font-family:var(--mono);color:var(--paper);caret-color:var(--lav)}
+.demo__input:focus{outline:none}
+.demo__line:focus-within{outline:2px solid var(--lav);outline-offset:4px;border-radius:2px}
+.demo__input::placeholder{color:#4B5B62}
+
+/* finish state */
+.demo__end{display:none;margin-top:.9rem;gap:.7rem;flex-wrap:wrap;align-items:center}
+.demo__console[data-done="true"] .demo__end{display:flex}
+.demo__console[data-done="true"] .demo__line{display:none}
+.demo__reset{background:none;border:0;padding:0;cursor:pointer;font:inherit;
+  font-family:var(--mono);font-size:12.5px;color:#7C8B90;text-decoration:underline;
+  text-underline-offset:3px}
+.demo__reset:hover{color:var(--lav)}
 </style>
 </head>
 <body>
@@ -172,7 +208,7 @@ footer a:hover{color:var(--lav)}
       <p class="eyebrow">Make with Fabric</p>
       <h1 class="display">Watch systems <em>come to life</em>.</h1>
       <p class="lede">
-        Describe systems in plain text. Fabric builds them, instantly and exactly, every time.
+        Describe parts in plain text. Fabric builds them, instantly and exactly, every time.
       </p>
       <form class="waitlist" id="waitlist" novalidate>
         <label class="hp" for="company">Company (leave blank)</label>
@@ -187,24 +223,32 @@ footer a:hover{color:var(--lav)}
 
 
   <!-- DEMO SLAB -->
-  <section class="band band--green">
+  <section class="band band--blue">
     <div class="wrap">
       <span class="tag">demo.JSON</span>
       <figure class="slab demo">
         <!-- swap point: replace the child of .demo__stage with the live
              session when it's ready, and set data-demo-state="live" -->
+        <!-- stage: swap the child for the live session later -->
         <div class="demo__stage" data-demo-state="placeholder" id="demoStage">
-          <!-- when the clip exists, set data-demo-state="ready"
-               and uncomment:
-          <video id="demoVideo" muted loop playsinline preload="none"
-                 poster="POSTER_URL" src="VIDEO_URL"
-                 aria-label="Fabric rebuilding a model after a parameter change"></video>
-          <button class="demo__toggle" id="demoToggle" type="button"
-                  data-playing="true" aria-label="Pause the demo">
-            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
-            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l14 8-14 8z"/></svg>
-          </button>
-          -->
+          <img class="demo__frame" id="demoFrame" alt="" aria-hidden="true">
+        </div>
+
+        <div class="demo__console" id="demoConsole" data-done="false">
+          <ol class="demo__tasks" id="demoTasks"></ol>
+          <div class="demo__out" id="demoOut" role="log" aria-live="polite"></div>
+
+          <label class="demo__line" for="demoInput">
+            <span class="hp">Type the command shown above</span>
+            <input class="demo__input" id="demoInput" type="text"
+                   autocomplete="off" autocorrect="off" autocapitalize="off"
+                   spellcheck="false" placeholder="type the command">
+          </label>
+
+          <div class="demo__end">
+            <a class="btn btn--solid" href="#waitlist" id="demoCta">Join the waitlist</a>
+            <button class="demo__reset" id="demoReset" type="button">run it again</button>
+          </div>
         </div>
       </figure>
     </div>
@@ -232,41 +276,133 @@ footer a:hover{color:var(--lav)}
 
 <script>
 /* ------------------------------------------------------------------
-   Demo playback. Nothing downloads until the stage scrolls into view
-   (preload="none" + IntersectionObserver), and playback pauses when it
-   leaves. No-ops safely while the stage is still a placeholder.
+   Interactive demo.
+
+   STEPS is the only thing to edit when real content exists: the command
+   the reader must type, the instruction shown, what prints back, and the
+   frame that appears. Nothing else in this file names a command.
    ------------------------------------------------------------------ */
+const STEPS = [
+  { cmd:   'PLACEHOLDER_COMMAND_1',                       // TODO: real syntax
+    say:   'Start a new part',
+    out:   ['placeholder response line'],                 // TODO: real output
+    frame: 'assets/demo/step-1.webp' },
+  { cmd:   'PLACEHOLDER_COMMAND_2',
+    say:   'Give it a dimension',
+    out:   ['placeholder response line'],
+    frame: 'assets/demo/step-2.webp' },
+  { cmd:   'PLACEHOLDER_COMMAND_3',
+    say:   'Change one number and rebuild',
+    out:   ['placeholder response line'],
+    frame: 'assets/demo/step-3.webp' },
+];
+
+const DONE_LINE = 'That is the whole loop. Every part you make works this way.';
+
+/* Single error surface. Swap these strings for the real messages and the
+   demo speaks in the software's voice everywhere at once. */
+function errorFor(input, step){
+  const typed  = input.split(/\s+/)[0];
+  const wanted = step.cmd.split(/\s+/)[0];
+  return typed === wanted
+    ? 'fabric: ' + typed + ': invalid arguments'          // TODO: real message
+    : 'fabric: command not found: ' + typed;              // TODO: real message
+}
+
 (function(){
-  const video  = document.getElementById('demoVideo');
-  const toggle = document.getElementById('demoToggle');
-  if (!video) return;                                    // placeholder state
+  const stage   = document.getElementById('demoStage');
+  const frame   = document.getElementById('demoFrame');
+  const tasks   = document.getElementById('demoTasks');
+  const out     = document.getElementById('demoOut');
+  const input   = document.getElementById('demoInput');
+  const console_= document.getElementById('demoConsole');
+  const reset   = document.getElementById('demoReset');
+  const cta     = document.getElementById('demoCta');
+  if (!stage || !input) return;
 
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let paused  = still;                                   // reader-intent, not observer-intent
-  if (still && toggle) {
-    toggle.dataset.playing = 'false';
-    toggle.setAttribute('aria-label', 'Play the demo');
+  let at = 0;
+
+  function paintTasks(){
+    tasks.innerHTML = '';
+    STEPS.forEach((step, i) => {
+      const li = document.createElement('li');
+      li.dataset.state = i < at ? 'done' : i === at ? 'now' : 'todo';
+      li.append(step.say + ' ');
+      const code = document.createElement('code');
+      code.textContent = step.cmd;
+      li.append(code);
+      tasks.append(li);
+    });
   }
 
-  const play = () => video.play().catch(() => {});       // autoplay can still be refused
-
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting && !paused) play();
-        else video.pause();
-      });
-    }, { threshold: 0.25 }).observe(video);
-  } else if (!paused) {
-    play();
+  function say(text, kind){
+    const p = document.createElement('p');
+    if (kind) p.dataset.kind = kind;
+    p.textContent = text;
+    out.append(p);
+    out.scrollTop = out.scrollHeight;
   }
 
-  if (toggle) toggle.addEventListener('click', () => {
-    paused = !video.paused;
-    if (paused) video.pause(); else play();
-    toggle.dataset.playing = paused ? 'false' : 'true';
-    toggle.setAttribute('aria-label', paused ? 'Play the demo' : 'Pause the demo');
+  /* Frames are an enhancement: if the image is missing the stage simply
+     keeps its dot grid and the demo still runs end to end. */
+  function show(src){
+    if (!src) return;
+    const img = new Image();
+    img.onload = () => {
+      frame.src = src;
+      frame.dataset.shown = 'true';
+      stage.dataset.demoState = 'ready';
+    };
+    img.src = src;
+  }
+  function preload(i){ if (STEPS[i] && STEPS[i].frame) new Image().src = STEPS[i].frame; }
+
+  function advance(){
+    const step = STEPS[at];
+    (step.out || []).forEach(line => say(line));
+    show(step.frame);
+    at++;
+    preload(at);
+    paintTasks();
+    if (at >= STEPS.length){
+      say(DONE_LINE, 'done');
+      console_.dataset.done = 'true';
+    }
+  }
+
+  function submit(){
+    const typed = input.value.trim();
+    if (!typed) return;
+    say('> ' + typed, 'cmd');
+    input.value = '';
+    if (typed === STEPS[at].cmd) advance();
+    else say(errorFor(typed, STEPS[at]), 'err');
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter'){ e.preventDefault(); submit(); }
   });
+
+  reset.addEventListener('click', () => {
+    at = 0;
+    out.innerHTML = '';
+    frame.dataset.shown = 'false';
+    frame.removeAttribute('src');
+    stage.dataset.demoState = 'placeholder';
+    console_.dataset.done = 'false';
+    paintTasks();
+    preload(0);
+    input.focus();
+  });
+
+  /* the ask, at the moment it lands */
+  cta.addEventListener('click', () => {
+    const email = document.getElementById('email');
+    if (email) setTimeout(() => email.focus({ preventScroll: true }), 500);
+  });
+
+  paintTasks();
+  preload(0);
 })();
 
 /* ------------------------------------------------------------------
