@@ -107,6 +107,12 @@ header{position:sticky;top:0;z-index:20;background:rgba(9,31,31,.86);
 .formnote[data-state="err"]{color:var(--terra)}
 .waitlist[hidden]{display:none}
 
+/* confirmation, sits where the form was */
+.waitlist-done{display:flex;align-items:center;gap:.6rem;margin-top:.5rem;
+  font-size:1.0625rem;color:var(--lilac-pale)}
+.waitlist-done[hidden]{display:none}
+.waitlist-done::before{content:"✓";color:var(--lilac)}
+
 footer{border-top:1px solid var(--teal-lift);padding-block:2.25rem;
   font-size:.8125rem;color:#7E8C8C}
 footer a{color:inherit;text-decoration:none}
@@ -218,6 +224,7 @@ footer a:hover{color:var(--lilac)}
                placeholder="Your email" aria-label="Email address">
         <button class="btn btn--solid" type="submit" id="wlBtn">Join the waitlist</button>
       </form>
+      <p class="waitlist-done" id="wlDone" role="status" aria-live="polite" hidden>Check your inbox</p>
       <p class="formnote" id="wlNote" role="status" aria-live="polite"></p>
     </div>
   </section>
@@ -434,7 +441,8 @@ form.addEventListener('submit', async (e) => {
     const res = await fetch(ENDPOINT, { method:'POST', body, headers:{ Accept:'application/json' } });
     if (!res.ok) throw new Error(res.status);
     form.hidden = true;
-    say('You are on the list. Check your inbox to confirm.', 'ok');
+    document.getElementById('wlDone').hidden = false;
+    say('');
   } catch {
     btn.disabled = false;
     say('Something went wrong. Try again in a moment.', 'err');
