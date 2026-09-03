@@ -129,6 +129,7 @@ footer a:hover{color:var(--lilac)}
    ------------------------------------------------------------------ */
 .demo{margin:0}
 .demo__stage{position:relative;aspect-ratio:16/9;overflow:hidden;
+  max-height:min(56vh,32rem);
   border-radius:2px 2px 0 0;background:var(--teal-void)}
 .demo__stage > video,
 .demo__stage > iframe,
@@ -151,21 +152,8 @@ footer a:hover{color:var(--lilac)}
   padding:clamp(.9rem,2.2vw,1.25rem);font-size:.9375rem;line-height:1.65;
   box-shadow:0 0 0 1px rgba(42,42,34,.28)}
 
-/* task list */
-.demo__tasks{list-style:none;margin:0 0 .9rem;padding:0 0 .9rem;
-  border-bottom:1px solid var(--teal-lift);display:grid;gap:.3rem}
-.demo__tasks li{display:flex;gap:.6rem;align-items:baseline;color:#5E6D6D}
-.demo__tasks li::before{content:"•";flex:none;width:1ch;color:#4C5C5C}
-.demo__tasks li[data-state="done"]{color:#6E7C7C}
-.demo__tasks li[data-state="done"]::before{content:"✓";color:var(--lilac-deep)}
-.demo__tasks li[data-state="now"]{color:var(--paper)}
-.demo__tasks li[data-state="now"]::before{content:"›";color:var(--lilac)}
-.demo__tasks code{font:inherit;color:var(--lilac-pale);background:rgba(207,179,235,.12);
-  border-radius:2px;padding:.05rem .4rem;margin-left:.15rem}
-.demo__tasks li[data-state="todo"] code{visibility:hidden}
-
 /* output history */
-.demo__out{margin:0;max-height:9.5rem;overflow-y:auto;overscroll-behavior:contain}
+.demo__out{margin:0;max-height:min(9.5rem,18vh);overflow-y:auto;overscroll-behavior:contain}
 .demo__out p{margin:0;color:#8B9B9B;white-space:pre-wrap;word-break:break-word}
 .demo__out p[data-kind="cmd"]{color:var(--paper)}
 .demo__out p[data-kind="err"]{color:var(--terra)}
@@ -203,7 +191,7 @@ footer a:hover{color:var(--lilac)}
       </svg>
       <span>Fabric</span>
     </a>
-    <a class="btn" href="#waitlist">Make with Fabric</a>
+    <a class="btn" href="#demo">Try Fabric demo</a>
   </div>
 </header>
 
@@ -215,7 +203,7 @@ footer a:hover{color:var(--lilac)}
       <p class="eyebrow">Computer Aided Design</p>
       <h1 class="display"><em>Spell</em> systems into reality.</h1>
       <p class="lede">
-        Script models with dynamic constraints. 
+        Script shapes and models with dynamic relationships. 
       </p>
       <form class="waitlist" id="waitlist" novalidate>
         <label class="hp" for="company">Company (leave blank)</label>
@@ -231,7 +219,7 @@ footer a:hover{color:var(--lilac)}
 
 
   <!-- DEMO SLAB -->
-  <section class="band band--teal">
+  <section class="band band--teal" id="demo">
     <div class="wrap">
       <span class="tag">demo.JSON</span>
       <figure class="slab demo">
@@ -243,7 +231,6 @@ footer a:hover{color:var(--lilac)}
         </div>
 
         <div class="demo__console" id="demoConsole" data-done="false">
-          <ol class="demo__tasks" id="demoTasks"></ol>
           <div class="demo__out" id="demoOut" role="log" aria-live="polite"></div>
 
           <label class="demo__line" for="demoInput">
@@ -320,7 +307,6 @@ function errorFor(input, step){
 (function(){
   const stage   = document.getElementById('demoStage');
   const frame   = document.getElementById('demoFrame');
-  const tasks   = document.getElementById('demoTasks');
   const out     = document.getElementById('demoOut');
   const input   = document.getElementById('demoInput');
   const console_= document.getElementById('demoConsole');
@@ -329,19 +315,6 @@ function errorFor(input, step){
   if (!stage || !input) return;
 
   let at = 0;
-
-  function paintTasks(){
-    tasks.innerHTML = '';
-    STEPS.forEach((step, i) => {
-      const li = document.createElement('li');
-      li.dataset.state = i < at ? 'done' : i === at ? 'now' : 'todo';
-      li.append(step.say + ' ');
-      const code = document.createElement('code');
-      code.textContent = step.cmd;
-      li.append(code);
-      tasks.append(li);
-    });
-  }
 
   function say(text, kind){
     const p = document.createElement('p');
@@ -371,7 +344,6 @@ function errorFor(input, step){
     show(step.frame);
     at++;
     preload(at);
-    paintTasks();
     if (at >= STEPS.length){
       say(DONE_LINE, 'done');
       console_.dataset.done = 'true';
@@ -398,7 +370,6 @@ function errorFor(input, step){
     frame.removeAttribute('src');
     stage.dataset.demoState = 'placeholder';
     console_.dataset.done = 'false';
-    paintTasks();
     preload(0);
     input.focus();
   });
@@ -409,7 +380,6 @@ function errorFor(input, step){
     if (email) setTimeout(() => email.focus({ preventScroll: true }), 500);
   });
 
-  paintTasks();
   preload(0);
 })();
 
