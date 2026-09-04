@@ -146,37 +146,37 @@ footer a:hover{color:var(--lilac)}
 .demo__frame[data-shown="true"]{opacity:1}
 
 /* ------------------------------------------------------------------
-   CONSOLE — flush under the stage so the two read as one screen.
+   CONSOLE — paper, continuous with the slab it sits on. Ink on paper,
+   so every colour here is an ink tone rather than a screen tone.
    ------------------------------------------------------------------ */
-.demo__console{background:var(--teal-void);border-radius:0 0 2px 2px;
-  padding:clamp(.9rem,2.2vw,1.25rem);font-size:.9375rem;line-height:1.65;
-  box-shadow:0 0 0 1px rgba(42,42,34,.28)}
+.demo__console{background:var(--paper);color:var(--ink);border-radius:0 0 2px 2px;
+  padding:clamp(.9rem,2.2vw,1.25rem) 0 0;font-size:.9375rem;line-height:1.65}
 
 /* output history */
 .demo__out{margin:0;max-height:min(9.5rem,18vh);overflow-y:auto;overscroll-behavior:contain}
-.demo__out p{margin:0;color:#8B9B9B;white-space:pre-wrap;word-break:break-word}
-.demo__out p[data-kind="cmd"]{color:var(--paper)}
-.demo__out p[data-kind="err"]{color:var(--terra)}
-.demo__out p[data-kind="done"]{color:var(--lilac)}
+.demo__out p{margin:0;color:var(--ink-soft);white-space:pre-wrap;word-break:break-word}
+.demo__out p[data-kind="cmd"]{color:var(--ink)}
+.demo__out p[data-kind="err"]{color:#A2401C}
+.demo__out p[data-kind="done"]{color:var(--lilac-deep)}
 .demo__out:empty{display:none}
 
 /* prompt line */
 .demo__line{display:flex;align-items:center;gap:.55rem;margin-top:.55rem}
-.demo__line::before{content:">";color:var(--lilac);flex:none}
+.demo__line::before{content:">";color:var(--lilac-deep);flex:none}
 .demo__input{flex:1 1 auto;min-width:0;background:none;border:0;padding:.15rem 0;
-  font:inherit;font-family:var(--mono);color:var(--paper);caret-color:var(--lilac)}
+  font:inherit;font-family:var(--mono);color:var(--ink);caret-color:var(--lilac-deep)}
 .demo__input:focus{outline:none}
-.demo__line:focus-within{outline:2px solid var(--lilac);outline-offset:4px;border-radius:2px}
-.demo__input::placeholder{color:#4C5C5C}
+.demo__line:focus-within{outline:2px solid var(--lilac-deep);outline-offset:4px;border-radius:2px}
+.demo__input::placeholder{color:#9A9578}
 
 /* finish state */
 .demo__end{display:none;margin-top:.9rem;gap:.7rem;flex-wrap:wrap;align-items:center}
 .demo__console[data-done="true"] .demo__end{display:flex}
 .demo__console[data-done="true"] .demo__line{display:none}
 .demo__reset{background:none;border:0;padding:0;cursor:pointer;font:inherit;
-  font-family:var(--mono);font-size:.8125rem;color:#7E8C8C;text-decoration:underline;
+  font-family:var(--mono);font-size:.8125rem;color:var(--ink-soft);text-decoration:underline;
   text-underline-offset:3px}
-.demo__reset:hover{color:var(--lilac)}
+.demo__reset:hover{color:var(--lilac-deep)}
 </style>
 </head>
 <body>
