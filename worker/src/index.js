@@ -44,7 +44,7 @@ export default {
       res = await fetch('https://api.buttondown.com/v1/subscribers', {
         method: 'POST',
         headers: {
-          'Authorization': `Token ${env.BUTTONDOWN_API_KEY}`,
+          'Authorization': `Token ${String(env.BUTTONDOWN_API_KEY || '').trim()}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
