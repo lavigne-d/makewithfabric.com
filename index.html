@@ -203,9 +203,10 @@ footer a:hover{color:var(--lilac)}
       <p class="eyebrow">Computer Aided Design</p>
       <h1 class="display">Systems <em>spelled</em> out.</h1>
       <p class="lede">
-        Script your ideas and see any version.
+        Script models and see any version.
       </p>
-      <form class="waitlist" id="waitlist" novalidate>
+      <form class="waitlist" id="waitlist" method="post" target="_blank" novalidate>
+        <input type="hidden" name="embed" value="1">
         <label class="hp" for="company">Company (leave blank)</label>
         <input class="hp" type="text" id="company" name="company" tabindex="-1" autocomplete="off">
         <input type="email" name="email" id="email" required autocomplete="email"
@@ -384,39 +385,34 @@ function errorFor(input, step){
 })();
 
 /* ------------------------------------------------------------------
-   Waitlist. Paste your provider's form endpoint below and it works.
-   Public by design — this URL is visible in the page source, which is
-   fine: it only accepts submissions, it can't read the list.
+   Waitlist, via Buttondown with double opt-in: Buttondown emails a
+   confirmation link and only adds the address once it's clicked.
+   Buttondown asks for a real form post rather than fetch (it may show
+   a CAPTCHA or a correction), so the post opens in a new tab and this
+   page swaps to "Check your inbox".
    ------------------------------------------------------------------ */
-const ENDPOINT = ""; // e.g. https://eocampaign1.com/form/xxxx  |  https://buttondown.com/api/emails/embed-subscribe/fabric
+const BUTTONDOWN_USER = "makewithfabric"; // buttondown.com/makewithfabric
 
 const form = document.getElementById('waitlist');
 const note = document.getElementById('wlNote');
-const btn  = document.getElementById('wlBtn');
 
 function say(msg, state){ note.textContent = msg; note.dataset.state = state || ''; }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+form.addEventListener('submit', (e) => {
   const email = form.email.value.trim();
 
-  if (form.company.value) return;                      // honeypot: bot filled it
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return say('That address looks incomplete.', 'err');
-  if (!ENDPOINT) return say('Form endpoint not wired up yet.', 'err');
+  if (form.company.value) return e.preventDefault();   // honeypot: bot filled it
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { e.preventDefault(); return say('That address looks incomplete.', 'err'); }
+  if (!BUTTONDOWN_USER) { e.preventDefault(); return say('Form endpoint not wired up yet.', 'err'); }
 
-  btn.disabled = true; say('Sending…');
-  try {
-    const body = new FormData();
-    body.append('email', email);
-    const res = await fetch(ENDPOINT, { method:'POST', body, headers:{ Accept:'application/json' } });
-    if (!res.ok) throw new Error(res.status);
+  form.email.value = email;
+  form.action = 'https://buttondown.com/api/emails/embed-subscribe/' + BUTTONDOWN_USER;
+  // let the native post go out, then swap the form for the confirmation
+  setTimeout(() => {
     form.hidden = true;
     document.getElementById('wlDone').hidden = false;
     say('');
-  } catch {
-    btn.disabled = false;
-    say('Something went wrong. Try again in a moment.', 'err');
-  }
+  });
 });
 </script>
 </body>
