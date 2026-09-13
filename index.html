@@ -205,7 +205,7 @@ footer a:hover{color:var(--lilac)}
       <p class="lede">
         Script models and see any version.
       </p>
-      <form class="waitlist" id="waitlist" method="post" target="_blank" novalidate>
+      <form class="waitlist" id="waitlist" method="post" target="wlFrame" novalidate>
         <input type="hidden" name="embed" value="1">
         <label class="hp" for="company">Company (leave blank)</label>
         <input class="hp" type="text" id="company" name="company" tabindex="-1" autocomplete="off">
@@ -213,6 +213,8 @@ footer a:hover{color:var(--lilac)}
                placeholder="Your email" aria-label="Email address">
         <button class="btn btn--solid" type="submit" id="wlBtn">Join the waitlist</button>
       </form>
+      <!-- the post lands here, out of sight, so the visitor never leaves the page -->
+      <iframe name="wlFrame" title="Waitlist signup" hidden></iframe>
       <p class="waitlist-done" id="wlDone" role="status" aria-live="polite" hidden>Check your inbox</p>
       <p class="formnote" id="wlNote" role="status" aria-live="polite"></p>
     </div>
@@ -387,9 +389,8 @@ function errorFor(input, step){
 /* ------------------------------------------------------------------
    Waitlist, via Buttondown with double opt-in: Buttondown emails a
    confirmation link and only adds the address once it's clicked.
-   Buttondown asks for a real form post rather than fetch (it may show
-   a CAPTCHA or a correction), so the post opens in a new tab and this
-   page swaps to "Check your inbox".
+   Buttondown asks for a real form post rather than fetch, so the post
+   goes into a hidden iframe and this page swaps to "Check your inbox".
    ------------------------------------------------------------------ */
 const BUTTONDOWN_USER = "makewithfabric"; // buttondown.com/makewithfabric
 
