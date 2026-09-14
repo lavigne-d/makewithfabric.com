@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fabric — About</title>
-<meta name="description" content="What Fabric is for: its purpose, vision, mission and values.">
+<meta name="description" content="Why we started Fabric, and who it's for: engineers, researchers and hobbyists.">
 
 <!-- self-host these before shipping to Pages -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,6 +98,9 @@ footer a:hover{color:var(--paper)}
 .about__slab{margin:0}
 .slab .about__body{margin:0;color:var(--ink);white-space:pre-wrap;
   font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.55;max-width:60ch}
+.slab .about__body + .about__body{margin-top:1em}
+/* several cards under one heading */
+.about__group{display:grid;gap:1.75rem}
 </style>
 </head>
 <body>
@@ -108,7 +111,7 @@ footer a:hover{color:var(--paper)}
       <img src="logo.png" alt="" width="82" height="28">
       <span>Fabric</span>
     </a>
-    <a class="btn" href="index.html#demo">Try Fabric demo</a>
+    <a class="btn" href="index.html#waitlist">Join the waitlist</a>
   </div>
 </header>
 
@@ -126,10 +129,40 @@ footer a:hover{color:var(--paper)}
   <section class="band band--teal">
     <div class="wrap about">
 
-      <div id="purpose">
-        <p class="eyebrow">Purpose</p>
-        <span class="tag">purpose.md</span>
-        <figure class="slab about__slab"><p class="about__body">Fabric is a pay-once own forever, on-disk, programmatic computer-aided-design software.</p></figure>
+      <div id="what">
+        <p class="eyebrow">What Fabric is</p>
+        <span class="tag">fabric.md</span>
+        <figure class="slab about__slab"><p class="about__body">Fabric is a pay-once own forever, on-disk, programmatic computer-aided-design software.</p><p class="about__body">A programmatic problem-solving software with 3D modeling, meshing, simulation, and manufacturing tools built in.</p></figure>
+      </div>
+
+      <div id="story">
+        <p class="eyebrow">Why we started Fabric</p>
+        <span class="tag">story.md</span>
+        <figure class="slab about__slab"><p class="about__body">We started Fabric because we are researchers who felt the pain of disorganized variables, numerous software tools with their own handling of things, loss of continuity between setups in simulation and manufacturing, and difficulty relating data back to the original variables used to define the problem.</p></figure>
+      </div>
+
+      <div id="who">
+        <p class="eyebrow">Who it's for</p>
+        <div class="about__group">
+          <div id="researchers">
+            <span class="tag">researchers.md</span>
+            <figure class="slab about__slab"><p class="about__body">The entire data management system is handled in Fabric. A single file can track any number of simulation runs or experiments, with date and time tracking and queryable information about exactly what was done in each run.</p></figure>
+          </div>
+          <div id="engineers">
+            <span class="tag">engineers.md</span>
+            <figure class="slab about__slab"><p class="about__body">Keep continuity between your simulation and manufacturing setups, and relate every result back to the variables that defined the problem. Writing full reports directly from your variable definitions is coming.</p></figure>
+          </div>
+          <div id="hobbyists">
+            <span class="tag">hobbyists.md</span>
+            <figure class="slab about__slab"><p class="about__body">One person makes a model in Fabric, say a screw. Anyone can import that screw from the library and make a variation that meets the exact specs of their system. The same works for entire complex multi-physics systems.</p></figure>
+          </div>
+        </div>
+      </div>
+
+      <div id="promise">
+        <p class="eyebrow">Our promise</p>
+        <span class="tag">promise.md</span>
+        <figure class="slab about__slab"><p class="about__body">Buying Fabric is like buying a well-made tool that you keep forever. Pay once and it's yours for good. No subscription.</p></figure>
       </div>
 
       <div id="vision">
@@ -138,16 +171,14 @@ footer a:hover{color:var(--paper)}
         <figure class="slab about__slab"><p class="about__body">For humans to live self-sufficiently in harmony with nature and technology.</p></figure>
       </div>
 
-      <div id="mission">
-        <p class="eyebrow">Mission</p>
-        <span class="tag">mission.md</span>
-        <figure class="slab about__slab"><p class="about__body">A programmatic problem-solving software with 3D modeling, meshing, simulation, and manufacturing tools built in.</p></figure>
-      </div>
-
       <div id="values">
         <p class="eyebrow">Values</p>
         <span class="tag">values.md</span>
         <figure class="slab about__slab"><p class="about__body">To act in the interest of the collective, and to solve humanity's greatest challenges.</p></figure>
+      </div>
+
+      <div>
+        <a class="btn btn--solid" href="index.html#waitlist">Join the waitlist</a>
       </div>
 
     </div>
