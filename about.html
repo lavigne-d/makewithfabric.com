@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fabric — Mission</title>
-<meta name="description" content="The mission behind Fabric.">
+<title>Fabric — About</title>
+<meta name="description" content="What Fabric is for: its purpose, vision, mission and values.">
 
 <!-- self-host these before shipping to Pages -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,10 +92,11 @@ footer{border-top:1px solid var(--teal-lift);padding-block:2.25rem;
 footer a{color:inherit;text-decoration:none}
 footer a:hover{color:var(--lilac)}
 
-/* mission slab — the paper surface holding the statement, styled like the
-   demo console. Replace the placeholder text (search: mission-text). */
-.mission{margin:0}
-.mission__body{margin:0;color:var(--ink);white-space:pre-wrap;
+/* about — one paper slab per statement, styled like the demo console.
+   Replace each placeholder (search: -text). Line breaks are kept. */
+.about{display:grid;gap:clamp(2.5rem,6vw,4rem)}
+.about__slab{margin:0}
+.slab .about__body{margin:0;color:var(--ink);white-space:pre-wrap;
   font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.55;max-width:60ch}
 </style>
 </head>
@@ -113,15 +114,42 @@ footer a:hover{color:var(--lilac)}
 
 <main id="top">
 
-  <!-- MISSION SLAB — same shape as the demo section -->
-  <section class="band band--teal" id="mission">
+  <section class="band dots">
     <div class="wrap">
-      <p class="eyebrow">Mission</p>
-      <span class="tag">mission.txt</span>
-      <figure class="slab mission">
-        <!-- Replace the word below with the real mission statement. -->
-        <p class="mission__body" id="missionText">mission-text</p>
-      </figure>
+      <p class="eyebrow">About</p>
+      <h1 class="display">About <em>Fabric</em>.</h1>
+    </div>
+  </section>
+
+  <!-- STATEMENTS — same shape as the demo section. Replace each
+       placeholder word with the real statement. -->
+  <section class="band band--teal">
+    <div class="wrap about">
+
+      <div id="purpose">
+        <p class="eyebrow">Purpose</p>
+        <span class="tag">purpose.txt</span>
+        <figure class="slab about__slab"><p class="about__body">purpose-text</p></figure>
+      </div>
+
+      <div id="vision">
+        <p class="eyebrow">Vision</p>
+        <span class="tag">vision.txt</span>
+        <figure class="slab about__slab"><p class="about__body">vision-text</p></figure>
+      </div>
+
+      <div id="mission">
+        <p class="eyebrow">Mission</p>
+        <span class="tag">mission.txt</span>
+        <figure class="slab about__slab"><p class="about__body">mission-text</p></figure>
+      </div>
+
+      <div id="values">
+        <p class="eyebrow">Values</p>
+        <span class="tag">values.txt</span>
+        <figure class="slab about__slab"><p class="about__body">values-text</p></figure>
+      </div>
+
     </div>
   </section>
 
@@ -130,7 +158,7 @@ footer a:hover{color:var(--lilac)}
 <footer>
   <div class="wrap" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
     <span>Fabric</span>
-    <span><a href="index.html">Home</a> · <a href="#">GitHub</a> · <a href="#">Docs</a></span>
+    <span><a href="index.html">Home</a></span>
   </div>
 </footer>
 
