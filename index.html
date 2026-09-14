@@ -71,10 +71,24 @@ header{position:sticky;top:0;z-index:20;background:rgba(9,31,31,.86);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--teal-lift)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:62px}
 .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
-.brand svg{width:26px;height:26px}
-.brand span{font-family:var(--disp);font-weight:100;
+.brand img{height:28px;width:auto;display:block}
+.brand span{font-family:var(--disp);font-weight:400;
   font-variation-settings:"opsz" 40,"SOFT" 30,"WONK" 1;
   font-size:1.625rem;letter-spacing:.18em;color:var(--lilac-pale)}
+header .btn{white-space:nowrap}
+@media (max-width:480px){
+  .brand{gap:.5rem}
+  .brand img{height:22px}
+  .brand span{font-size:1.25rem;letter-spacing:.12em}
+  header .btn{padding:.5rem .8rem;font-size:.8125rem}
+}
+@media (max-width:350px){
+  .bar{gap:.6rem}
+  .brand{gap:.4rem}
+  .brand img{height:18px}
+  .brand span{font-size:1.0625rem;letter-spacing:.08em}
+  header .btn{padding:.45rem .6rem;font-size:.75rem}
+}
 
 .lede{max-width:56ch;font-size:1.1875rem;color:#CFCBB2;margin:1.6rem 0 2rem}
 /* proof row: three affirmatives, dot-separated */
@@ -184,11 +198,7 @@ footer a:hover{color:var(--lilac)}
 <header>
   <div class="wrap bar">
     <a class="brand" href="#top">
-      <!-- placeholder mark until the real logo lands -->
-      <svg viewBox="0 0 40 40" aria-hidden="true">
-        <ellipse cx="20" cy="20" rx="18" ry="10" fill="none" stroke="#CFB3EB" stroke-width="1.4"/>
-        <ellipse cx="20" cy="20" rx="7" ry="3.8" fill="none" stroke="#E7D6F5" stroke-width="1.4"/>
-      </svg>
+      <img src="logo.png" alt="" width="82" height="28">
       <span>Fabric</span>
     </a>
     <a class="btn" href="#demo">Try Fabric demo</a>
@@ -203,7 +213,7 @@ footer a:hover{color:var(--lilac)}
       <p class="eyebrow">Computer Aided Design</p>
       <h1 class="display">Systems <em>spelled</em> out.</h1>
       <p class="lede">
-        Script models and see any version.
+        Become a wizard:
       </p>
       <form class="waitlist" id="waitlist" novalidate>
         <label class="hp" for="company">Company (leave blank)</label>

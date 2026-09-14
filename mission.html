@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fabric — Mission</title>
+<meta name="description" content="The mission behind Fabric.">
+
+<!-- self-host these before shipping to Pages -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..600,0..100,0..1;1,9..144,100..600,0..100,0..1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --teal-void:#091F1F;  --teal:#102B2B;  --teal-lift:#1B3A3A;
+  --paper:#E4DFC4;       --rule:#C8C09A;   --ink:#2A2A22;  --ink-soft:#5C5B49;
+  --terra:#C4652C;
+  --lilac:#CFB3EB;         --lilac-pale:#E7D6F5;  --lilac-deep:#8A70A9;
+
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --disp:"Fraunces",Georgia,serif;
+  --gut:clamp(1.25rem,4vw,3.5rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{margin:0;background:var(--teal-void);color:var(--paper);
+     font:400 1.0625rem/1.7 var(--mono);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:var(--gut)}
+.band{padding-block:clamp(3.5rem,8vw,7rem);position:relative}
+.band--teal{background:var(--teal)}
+
+/* dot grid, from the app viewports */
+.band > .wrap{position:relative;z-index:1}
+.dots::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(var(--teal-lift) 1.2px,transparent 1.2px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
+          mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
+
+/* type roles */
+.display{font-family:var(--disp);font-weight:300;
+  font-variation-settings:"opsz" 120,"SOFT" 40,"WONK" 1;
+  line-height:1.03;letter-spacing:-.01em;margin:0;color:var(--lilac-pale)}
+.eyebrow{font-size:.8125rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--lilac);font-weight:500;margin:0 0 1.1rem}
+h1.display{font-size:clamp(3rem,8vw,5.6rem)}
+h2.display{font-size:clamp(2.1rem,4.2vw,3rem)}
+em{font-style:italic;color:var(--lilac);font-variation-settings:"opsz" 144,"SOFT" 60,"WONK" 1}
+
+/* the paper slab — always the functional surface. the accent never lands here. */
+.slab{background:var(--paper);color:var(--ink);border-radius:3px;
+  padding:clamp(1.5rem,3.5vw,2.5rem);
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 18px 40px -24px #000}
+.slab p{color:var(--ink-soft);max-width:60ch}
+.tag{display:inline-block;background:#D6D0AE;color:var(--ink);font-size:.875rem;
+  letter-spacing:.06em;padding:.35rem .9rem;border-radius:4px 4px 0 0;position:relative;top:1px}
+
+.btn{display:inline-flex;align-items:center;padding:.72rem 1.3rem;border-radius:3px;
+  font:400 .9375rem var(--mono);text-decoration:none;cursor:pointer;
+  border:1px solid var(--lilac-deep);color:var(--lilac-pale);background:none;
+  transition:background .2s,color .2s,border-color .2s}
+.btn:hover{background:var(--lilac);color:var(--teal-void);border-color:var(--lilac)}
+.btn--solid{background:var(--lilac);color:var(--teal-void);border-color:var(--lilac)}
+:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
+
+header{position:sticky;top:0;z-index:20;background:rgba(9,31,31,.86);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--teal-lift)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.brand img{height:28px;width:auto;display:block}
+.brand span{font-family:var(--disp);font-weight:400;
+  font-variation-settings:"opsz" 40,"SOFT" 30,"WONK" 1;
+  font-size:1.625rem;letter-spacing:.18em;color:var(--lilac-pale)}
+header .btn{white-space:nowrap}
+@media (max-width:480px){
+  .brand{gap:.5rem}
+  .brand img{height:22px}
+  .brand span{font-size:1.25rem;letter-spacing:.12em}
+  header .btn{padding:.5rem .8rem;font-size:.8125rem}
+}
+@media (max-width:350px){
+  .bar{gap:.6rem}
+  .brand{gap:.4rem}
+  .brand img{height:18px}
+  .brand span{font-size:1.0625rem;letter-spacing:.08em}
+  header .btn{padding:.45rem .6rem;font-size:.75rem}
+}
+
+footer{border-top:1px solid var(--teal-lift);padding-block:2.25rem;
+  font-size:.8125rem;color:#7E8C8C}
+footer a{color:inherit;text-decoration:none}
+footer a:hover{color:var(--lilac)}
+
+/* mission slab — the paper surface holding the statement, styled like the
+   demo console. Replace the placeholder text (search: mission-text). */
+.mission{margin:0}
+.mission__body{margin:0;color:var(--ink);white-space:pre-wrap;
+  font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.55;max-width:60ch}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="" width="82" height="28">
+      <span>Fabric</span>
+    </a>
+    <a class="btn" href="index.html#demo">Try Fabric demo</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- MISSION SLAB — same shape as the demo section -->
+  <section class="band band--teal" id="mission">
+    <div class="wrap">
+      <p class="eyebrow">Mission</p>
+      <span class="tag">mission.txt</span>
+      <figure class="slab mission">
+        <!-- Replace the word below with the real mission statement. -->
+        <p class="mission__body" id="missionText">mission-text</p>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+    <span>Fabric</span>
+    <span><a href="index.html">Home</a> · <a href="#">GitHub</a> · <a href="#">Docs</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
