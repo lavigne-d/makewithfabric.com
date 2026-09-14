@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fabric: a scriptable CAD notebook</title>
-<meta name="description" content="Describe parts in plain text and watch Fabric build them. Scriptable CAD that stores on disk, rebuilds exactly, and makes infinite variations from one file.">
+<title>Fabric: computer aided design, written as text</title>
+<meta name="description" content="Write a part as text and Fabric builds it. Change a number and the whole design follows. Pay once, keep your files on your own disk.">
 
 <!-- self-host these before shipping to Pages -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -172,6 +172,7 @@ footer a:hover{color:var(--lilac)}
 .demo__out p[data-kind="cmd"]{color:var(--ink)}
 .demo__out p[data-kind="err"]{color:#A2401C}
 .demo__out p[data-kind="done"]{color:var(--lilac-deep)}
+.demo__out p[data-kind="cue"]{color:var(--ink);font-weight:500}
 .demo__out:empty{display:none}
 
 /* prompt line */
@@ -201,7 +202,7 @@ footer a:hover{color:var(--lilac)}
       <img src="logo.png" alt="" width="82" height="28">
       <span>Fabric</span>
     </a>
-    <a class="btn" href="#demo">Try Fabric demo</a>
+    <a class="btn" href="#waitlist">Join the waitlist</a>
   </div>
 </header>
 
@@ -210,10 +211,11 @@ footer a:hover{color:var(--lilac)}
   <!-- HERO -->
   <section class="band dots">
     <div class="wrap">
-      <p class="eyebrow">Computer Aided Design</p>
+      <p class="eyebrow">Computer aided design for engineers and makers</p>
       <h1 class="display">Systems <em>spelled</em> out</h1>
       <p class="lede">
-        in infinite variations.
+        Write a part as text and Fabric builds it. Change a number and
+        the whole design follows. Pay once and it's yours for good.
       </p>
       <form class="waitlist" id="waitlist" novalidate>
         <label class="hp" for="company">Company (leave blank)</label>
@@ -263,9 +265,9 @@ footer a:hover{color:var(--lilac)}
   <section class="band dots">
     <div class="wrap">
       <p class="proof">
-        <span>scriptable language</span>
-        <span>on-disk storage</span>
-        <span>infinite variations</span>
+        <span>no subscription</span>
+        <span>files stay on your disk</span>
+        <span>modeling through manufacturing</span>
       </p>
     </div>
   </section>
@@ -348,6 +350,14 @@ function errorFor(input, step){
   }
   function preload(i){ if (STEPS[i] && STEPS[i].frame) new Image().src = STEPS[i].frame; }
 
+  /* tell the reader what to do next and what to type */
+  function cue(){
+    const step = STEPS[at];
+    if (!step) return;
+    say(step.say, 'cue');
+    input.placeholder = step.cmd;
+  }
+
   function advance(){
     const step = STEPS[at];
     (step.out || []).forEach(line => say(line));
@@ -357,6 +367,8 @@ function errorFor(input, step){
     if (at >= STEPS.length){
       say(DONE_LINE, 'done');
       console_.dataset.done = 'true';
+    } else {
+      cue();
     }
   }
 
@@ -381,6 +393,7 @@ function errorFor(input, step){
     stage.dataset.demoState = 'placeholder';
     console_.dataset.done = 'false';
     preload(0);
+    cue();
     input.focus();
   });
 
@@ -391,6 +404,7 @@ function errorFor(input, step){
   });
 
   preload(0);
+  cue();
 })();
 
 /* ------------------------------------------------------------------
