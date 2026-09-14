@@ -155,6 +155,13 @@ footer a:hover{color:var(--lilac)}
   background-image:radial-gradient(var(--teal-lift) 1.2px,transparent 1.2px);
   background-size:26px 26px}
 
+/* until the demo is ready */
+.demo__stage--soon{border-radius:2px}
+.demo__stage .demo__soon{position:absolute;inset:0;margin:0;max-width:none;
+  display:grid;place-items:center;text-align:center;padding:1rem;
+  font-family:var(--disp);font-weight:300;font-size:clamp(1.6rem,4.5vw,2.75rem);
+  font-variation-settings:"opsz" 120,"SOFT" 40,"WONK" 1;color:var(--lilac-pale)}
+
 /* the crossfading frame */
 .demo__frame{opacity:0;transition:opacity .35s ease}
 .demo__frame[data-shown="true"]{opacity:1}
@@ -235,27 +242,10 @@ footer a:hover{color:var(--lilac)}
     <div class="wrap">
       <span class="tag">demo.JSON</span>
       <figure class="slab demo">
-        <!-- swap point: replace the child of .demo__stage with the live
-             session when it's ready, and set data-demo-state="live" -->
-        <!-- stage: swap the child for the live session later -->
-        <div class="demo__stage" data-demo-state="placeholder" id="demoStage">
-          <img class="demo__frame" id="demoFrame" alt="" aria-hidden="true">
-        </div>
-
-        <div class="demo__console" id="demoConsole" data-done="false">
-          <div class="demo__out" id="demoOut" role="log" aria-live="polite"></div>
-
-          <label class="demo__line" for="demoInput">
-            <span class="hp">Type the command shown above</span>
-            <input class="demo__input" id="demoInput" type="text"
-                   autocomplete="off" autocorrect="off" autocapitalize="off"
-                   spellcheck="false" placeholder="type the command">
-          </label>
-
-          <div class="demo__end">
-            <a class="btn btn--solid" href="#waitlist" id="demoCta">Join the waitlist</a>
-            <button class="demo__reset" id="demoReset" type="button">run it again</button>
-          </div>
+        <!-- the interactive demo (stage + console) is parked until it's
+             ready; restore its markup from commit ab749ec -->
+        <div class="demo__stage demo__stage--soon" data-demo-state="placeholder">
+          <p class="demo__soon">Demo coming soon</p>
         </div>
       </figure>
     </div>
